@@ -154,7 +154,17 @@
                         statusText.textContent = 'Scan successful!';
                         studentIdSpan.textContent = result.studentId;
                         studentInfo.classList.remove('hidden');
-                        addRecentScan(result);
+
+                        // Save attendance record
+                        const attendanceRecord = {
+                            studentId: result.studentId,
+                            studentName: result.studentName,
+                            timestamp: new Date().toISOString(),
+                            status: 'Present'
+                        };
+                        window.saveAttendanceRecord(attendanceRecord);
+
+                        addRecentScan(attendanceRecord);
                         window.notifications.add(`Attendance marked for ${result.studentName}`, 'success');
                     } else {
                         updateDeviceStatus(false);
